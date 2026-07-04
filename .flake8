@@ -1,0 +1,10 @@
+[flake8]
+filename =
+    ./src/**.py
+    ./tests/**.py
+per-file-ignores =
+    ./src/**__init__.py:F401
+statistics = True
+show-source = False
+max-line-length = 160
+count = False
