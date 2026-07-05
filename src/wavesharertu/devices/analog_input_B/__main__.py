@@ -1,20 +1,20 @@
-"""CLI for Waveshare Modbus RTU Analog Input 8CH device."""
+"""CLI for Waveshare Modbus RTU Analog Input 8CH (B) device."""
 
 import argparse
 import logging
 import sys
-from time import monotonic, sleep
+from time import monotonic
 
 from serial import SerialException
 from serial.rs485 import RS485, RS485Settings
 
 from ...config.cli import prompt_user_choice
 from ...modbus import ModbusException
-from .ai import AnalogInputMode, AnalogInput
+from .ai_b import AnalogInputB, AnalogInputModeB
 
 
-def _set_mode_for_all_channels(device: AnalogInput) -> None:
-    available_modes = list(AnalogInputMode)
+def _set_mode_for_all_channels(device: AnalogInputB) -> None:
+    available_modes = list(AnalogInputModeB)
     print("Available modes:")
     for index, mode in enumerate(available_modes, start=1):
         print(f"  {index}. {mode.readable_name()}")
@@ -31,8 +31,8 @@ def _set_mode_for_all_channels(device: AnalogInput) -> None:
     logging.info("All channels set to %s.", mode.readable_name())
 
 
-def _set_modes_for_each_channel(device: AnalogInput) -> None:
-    available_modes = list(AnalogInputMode)
+def _set_modes_for_each_channel(device: AnalogInputB) -> None:
+    available_modes = list(AnalogInputModeB)
     print("Available modes:")
     for index, mode in enumerate(available_modes, start=1):
         print(f"  {index}. {mode.readable_name()}")
@@ -51,13 +51,13 @@ def _set_modes_for_each_channel(device: AnalogInput) -> None:
     logging.info("All channel modes set individually.")
 
 
-def _show_current_channel_modes(device: AnalogInput) -> None:
+def _show_current_channel_modes(device: AnalogInputB) -> None:
     channel_modes = device.read_channel_modes()
     mode_details = ",".join(f"\n\tCH{index}: {mode.readable_name()}" for index, mode in enumerate(channel_modes, start=1))
     logging.info("Current channel modes: %s.", mode_details)
 
 
-def _fetch_values_in_loop(device: AnalogInput) -> None:
+def _fetch_values_in_loop(device: AnalogInputB) -> None:
     logging.info("Starting periodic value fetch. Press Ctrl+C to stop.")
     try:
         last_read_time = None
@@ -83,8 +83,8 @@ def _fetch_values_in_loop(device: AnalogInput) -> None:
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog="wavesharertu.devices.analog_input",
-        description="Read analog values and configure Waveshare Modbus RTU Analog Input 8CH parameters.",
+        prog="wavesharertu.devices.analog_input_B",
+        description="Read analog values and configure Waveshare Modbus RTU Analog Input 8CH (B) parameters.",
     )
     parser.add_argument("port", type=str, help="Serial port address (for example COM3).")
     parser.add_argument("address", type=int, help="Device Modbus address (1-255).")
@@ -125,7 +125,7 @@ def main() -> int:
     )
 
     logging.info(
-        "Analog Input 8CH connection parameters:\n\tPort=%s,\n\tAddress=%s,\n\tBaudrate=%s,\n\tParity=%s.",
+        "Analog Input 8CH (B) connection parameters:\n\tPort=%s,\n\tAddress=%s,\n\tBaudrate=%s,\n\tParity=%s.",
         args.port,
         args.address,
         args.baudrate,
@@ -134,7 +134,7 @@ def main() -> int:
     try:
         with RS485(port=args.port, baudrate=args.baudrate, parity=args.parity) as serial_port:
             serial_port.rs485_mode = RS485Settings(delay_before_rx=0.5)
-            device = AnalogInput(serial_port, address=args.address)
+            device = AnalogInputB(serial_port, address=args.address)
             try:
                 _show_current_channel_modes(device)
             except ModbusException as exc:
