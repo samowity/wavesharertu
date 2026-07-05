@@ -3,7 +3,6 @@
 import logging
 from collections.abc import Sequence
 from enum import IntEnum
-from time import sleep
 
 from ..analog_input.ai import AnalogInput
 
@@ -14,10 +13,10 @@ class AnalogInputModeB(IntEnum):
     """Input range modes for Analog Input 8CH (B)."""
 
     __descriptions = {
-        "VOLTAGE_0_10V": "0-10V",
-        "VOLTAGE_2_10V": "2-10V",
-        "CURRENT_0_20mA": "0-20mA",
-        "CURRENT_4_20mA": "4-20mA",
+        "VOLTAGE_0_10V": "0-10 V",
+        "VOLTAGE_2_10V": "2-10 V",
+        "CURRENT_0_20mA": "0-20 mA",
+        "CURRENT_4_20mA": "4-20 mA",
         "RAW_CODE": "Raw Code",
     }
 

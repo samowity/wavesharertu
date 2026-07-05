@@ -3,7 +3,6 @@
 import logging
 from collections.abc import Sequence
 from enum import IntEnum
-from time import sleep
 
 from ...modbus import compute_CRC, validate_response, ModbusException
 
@@ -14,10 +13,10 @@ class AnalogInputMode(IntEnum):
     """Input range modes for Analog Input 8CH."""
 
     __descriptions = {
-        "VOLTAGE_0_5V": "0-5V",
-        "VOLTAGE_1_5V": "1-5V",
-        "CURRENT_0_20mA": "0-20mA",
-        "CURRENT_4_20mA": "4-20mA",
+        "VOLTAGE_0_5V": "0-5 V",
+        "VOLTAGE_1_5V": "1-5 V",
+        "CURRENT_0_20mA": "0-20 mA",
+        "CURRENT_4_20mA": "4-20 mA",
         "RAW_CODE": "Raw Code",
     }
 
@@ -113,7 +112,6 @@ class AnalogInput:
         msg += compute_CRC(msg)
         logger.debug(f"Reading analog inputs: {msg.hex()}")
         self.serial.write(msg)
-        sleep(0.5)
         rsp = self.serial.read(self.serial.in_waiting)
         logger.debug(f"Analog input response: {rsp.hex()}")
 
@@ -146,7 +144,6 @@ class AnalogInput:
         msg += compute_CRC(msg)
         logger.debug(f"Reading channel modes: {msg.hex()}")
         self.serial.write(msg)
-        sleep(0.5)
         rsp = self.serial.read(self.serial.in_waiting)
         logger.debug(f"Channel modes response: {rsp.hex()}")
 
@@ -184,7 +181,6 @@ class AnalogInput:
         msg += compute_CRC(msg)
         logger.debug(f"Setting channel {channel} mode to {mode.name} ({mode.readable_name()}): {msg.hex()}")
         self.serial.write(msg)
-        sleep(0.5)
         rsp = self.serial.read(self.serial.in_waiting)
         logger.debug(f"Set channel mode response: {rsp.hex()}")
 
@@ -212,7 +208,6 @@ class AnalogInput:
         msg += compute_CRC(msg)
         logger.debug(f"Setting all channel modes: {msg.hex()}")
         self.serial.write(msg)
-        sleep(0.5)
         rsp = self.serial.read(self.serial.in_waiting)
         logger.debug(f"Set all channels mode response: {rsp.hex()}")
 
