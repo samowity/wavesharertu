@@ -32,7 +32,7 @@ class AnalogInputMode(IntEnum):
         return self.__descriptions[self.name]
 
 
-class ModbusRTUAnalogInput:
+class AnalogInput:
     """Interface for Waveshare Modbus RTU Analog Input 8CH device.
 
     This class provides specific functionality for reading analog input values
@@ -63,7 +63,7 @@ class ModbusRTUAnalogInput:
         """
         self.serial = serial
         self._address = address
-        logger.debug(f"ModbusRTUAnalogInput8CH initialized with address {self._address:02X} " f"and serial port {self.serial.port!r}.")
+        logger.debug(f"AnalogInput initialized with address {self._address:02X} " f"and serial port {self.serial.port!r}.")
 
         if modes is not None:
             self._check_modes_on_init(modes)

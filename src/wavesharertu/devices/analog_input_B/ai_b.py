@@ -5,7 +5,7 @@ from collections.abc import Sequence
 from enum import IntEnum
 from time import sleep
 
-from ..analog_input.ai import ModbusRTUAnalogInput
+from ..analog_input.ai import AnalogInput
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ class AnalogInputModeB(IntEnum):
         return self.__descriptions[self.name]
 
 
-class ModbusRTUAnalogInputB(ModbusRTUAnalogInput):
+class AnalogInputB(AnalogInput):
     """Interface for Waveshare Modbus RTU Analog Input 8CH (B) device.
 
     Version B differs from version A in voltage ranges:
@@ -63,7 +63,7 @@ class ModbusRTUAnalogInputB(ModbusRTUAnalogInput):
         """
         self.serial = serial
         self._address = address
-        logger.debug(f"ModbusRTUAnalogInput8CH(B) initialized with address {self._address:02X} " f"and serial port {self.serial.port!r}.")
+        logger.debug(f"AnalogInputB initialized with address {self._address:02X} " f"and serial port {self.serial.port!r}.")
 
         if modes is not None:
             self._check_modes_on_init(modes)

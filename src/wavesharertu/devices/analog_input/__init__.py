@@ -1,5 +1,5 @@
 """Modbus RTU Analog Input 8CH device."""
 
-from .ai import AnalogInputMode, ModbusRTUAnalogInput8CH
+from .ai import AnalogInputMode, AnalogInput
 
-__all__ = ["ModbusRTUAnalogInput8CH", "AnalogInputMode"]
+__all__ = ["AnalogInput", "AnalogInputMode"]
