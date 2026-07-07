@@ -47,10 +47,12 @@ pip install -e .
 The WaveshareRTU package includes several command-line tools that serve as both practical utilities and examples of how to use the library in your own projects:
 
 - [wavesharertu.config](src/wavesharertu/config/__main__.py) - Configure Modbus address, baud rate, and parity settings
+- [wavesharertu.devices.analog_input](src/wavesharertu/devices/analog_input/__main__.py) - Read analog values and configure channel modes for Analog Input 8CH
+- [wavesharertu.devices.analog_input_B](src/wavesharertu/devices/analog_input_B/__main__.py) - Read analog values and configure channel modes for Analog Input 8CH (B)
 
 **Important:** Run the following commands in the Python environment where the module is installed.
 
-#### Activating the Poetry environment
+### Activating the Poetry environment
 
 If you installed the package with Poetry, activate the virtual environment:
 
@@ -86,4 +88,32 @@ For more information, use the help option:
 
 ```bash
 python -m wavesharertu.config -h
+```
+
+### Analog Input 8CH Tool
+
+Run the Analog Input 8CH tool with:
+
+```bash
+python -m wavesharertu.devices.analog_input <port> <address>
+```
+
+Example:
+
+```bash
+python -m wavesharertu.devices.analog_input COM3 10 -b 9600 -p N
+```
+
+### Analog Input 8CH (B) Tool
+
+Run the Analog Input 8CH (B) tool with:
+
+```bash
+python -m wavesharertu.devices.analog_input_B <port> <address>
+```
+
+Example:
+
+```bash
+python -m wavesharertu.devices.analog_input_B COM3 10 -b 9600 -p N
 ```
