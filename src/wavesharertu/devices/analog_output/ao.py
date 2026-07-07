@@ -39,16 +39,13 @@ class AnalogOutput:
         self._address = address
         logger.debug(f"AnalogOutput initialized with address {self._address:02X} and serial port {self.serial.port!r}.")
 
-
     def _validate_output(self, value_uA: int) -> None:
         """Validate a single channel output value."""
         if not isinstance(value_uA, int):
             raise TypeError("Output value must be an integer")
 
         if not 0 <= value_uA <= 20_000:
-            raise ValueError(
-                f"Output value {value_uA} out of range (0-20 000 uA)"
-            )
+            raise ValueError(f"Output value {value_uA} out of range (0-20 000 uA)")
 
     def read_channel_outputs(self) -> list[int]:
         """Read analog output values from all 8 channels.
