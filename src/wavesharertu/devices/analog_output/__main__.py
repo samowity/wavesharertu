@@ -29,8 +29,7 @@ def _set_all_channels_output(device: AnalogOutput) -> None:
     logging.info("All channels set to %s uA.", value_uA)
 
 
-def _set_single_channel_output(device: AnalogOutput) -> None:
-    channel = int(prompt_user_choice("Choose output channel", range(1, 9)))
+def _set_single_channel_output(device: AnalogOutput, channel: int) -> None:
     value_uA = int(
         prompt_user_choice(
             f"Enter output current for CH{channel} in uA",
@@ -44,19 +43,12 @@ def _set_single_channel_output(device: AnalogOutput) -> None:
 def _interactive_control_loop(device: AnalogOutput) -> None:
     logging.info("Interactive control started. Press Ctrl+C to exit.")
     while True:
-        scope = (
-            prompt_user_choice(
-                "Change output for all channels or one channel?",
-                ["all", "one"],
-            )
-            .strip()
-            .lower()
-        )
+        channel = int(prompt_user_choice("Choose output channel (1-8) or 0 for all", range(0, 9)))
 
-        if scope == "all":
+        if channel == 0:
             _set_all_channels_output(device)
         else:
-            _set_single_channel_output(device)
+            _set_single_channel_output(device, channel)
 
         _show_current_channel_outputs(device)
 
