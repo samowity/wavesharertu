@@ -50,6 +50,7 @@ The WaveshareRTU package includes several command-line tools that serve as both 
 - [wavesharertu.devices.analog_input](src/wavesharertu/devices/analog_input/__main__.py) - Read analog values and configure channel modes for Analog Input 8CH
 - [wavesharertu.devices.analog_input_B](src/wavesharertu/devices/analog_input_B/__main__.py) - Read analog values and configure channel modes for Analog Input 8CH (B)
 - [wavesharertu.devices.analog_output](src/wavesharertu/devices/analog_output/__main__.py) - Interactively control output current values for Analog Output 8CH
+- [wavesharertu.devices.ao_ai_loopback](src/wavesharertu/devices/ao_ai_loopback/__main__.py) - Interactively set AO outputs and read AI inputs on one RS485 bus
 
 **Important:** Run the following commands in the Python environment where the module is installed.
 
@@ -141,3 +142,26 @@ python -m wavesharertu.devices.analog_output COM3 10 -b 9600 -p N
 ```
 
 After startup, the tool reads and displays the current output values for channels 1-8, then enters an interactive loop where you can set a single value for all channels or set a value for an individual channel.
+
+### AO->AI Loopback Interactive Tool
+
+Run the interactive loopback tool with:
+
+```bash
+python -m wavesharertu.devices.ao_ai_loopback <port> <ao_address> <ai_address>
+```
+
+Example:
+
+```bash
+python -m wavesharertu.devices.ao_ai_loopback COM3 25 10 -b 115200 -p N --settle-ms 500
+```
+
+This tool is intended for a hardware loopback setup where analog outputs are physically connected to analog inputs (for example AO CH1 -> AI CH1).
+After startup the script sets all AI channels to 0-20 mA mode, shows current AO and AI values, and enters an interactive loop:
+
+- Enter `1-8` to choose a single AO channel and set its value.
+- Enter `0` to set the same value for all AO channels.
+- Press Enter on an empty prompt to only read and display current AI values.
+
+After each value change, the script displays AO outputs, reads AI inputs, and prompts again.

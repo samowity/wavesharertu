@@ -121,6 +121,7 @@ def main() -> int:
         logging.error(exc)
         return 1
     except KeyboardInterrupt:
+        print()
         logging.info("Operation interrupted by user (Ctrl+C).")
         return 0
 
